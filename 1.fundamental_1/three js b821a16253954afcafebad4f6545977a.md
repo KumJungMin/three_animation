@@ -8,6 +8,8 @@
 - webGL은 점, 선, 삼각형만을 그리며 상당히 많은 양의 코드를 짜야한다.
 - 하지만 three.js는 3D요소들의 처리를 도와, 직관적인 코드를 짤 수 있다!
 
+<br/>
+
 ## 2) three.js앱의 구조
 
 ### (1) three.js는 트리구조이다.
@@ -25,7 +27,10 @@
 : 자동차(부모)의 방향이 변하면 바퀴(자식)의 방향도 같이 움직인다.
 
 - Texture : 이미지나 canvas로 생성한 이미지 또는 scene객체에서 랜더링한 결과물이다.
+
 - Light : 여러 종류의 광원을 말한다.
+
+<br/>
 
 ### (2) Mesh, Geometry, Material로 객체를 그린다.
 
@@ -34,6 +39,8 @@
 - Mesh : Metrial로 하나의 Geometry를 그리는 객체이다.
 - Geometry : 기하학 객체의 정점 데이터로서, 구, 정육면체, 면, 나무 등 다양하다. (기하학 객체들은 정점들의 모음이라고 생각하자)
 - Meterial : 기하학 객체를 그리는데 사용하는 표면 속성으로, 하나의 Material는 여러개의 texure를 사용할 수 있다.
+
+<br/>
 
 ### (3) 여러 개의 Mesh가 하나의 Material, Geometry를 동시 참조할 수 있다.
 
@@ -45,7 +52,13 @@
 - 두 정육면체의 위치가 달라야 하니, 2개의 mesh를 준비한다.
 - 각 mesh는 똑같은, 정점데이터와 색을 사용하므로 같은 Geometry, Material를 참조한다.
 
+
+<br/>
+
 ---
+
+
+<br/>
 
 ## 3) Hello Cube!
 
@@ -59,6 +72,8 @@ import * as THREE from './resources/threejs/r122/build/three.module.js';
 </script>
 ```
 
+<br/>
+
 ### (2) canvas 태그 작성
 
 - html에 canvas 태그를 작성한다.
@@ -69,6 +84,8 @@ import * as THREE from './resources/threejs/r122/build/three.module.js';
   <canvas id="c"></canvas>
 </body>
 ```
+
+<br/>
 
 ### (3) three.js, 랜더링
 
@@ -86,6 +103,8 @@ function main() {
 </script>
 ```
 
+<br/>
+
 ### (4) 카메라 준비
 
 - `PerspectiveCamera(원근 카메라)`를 준비한다.
@@ -100,11 +119,15 @@ function main() {
 
 : 하지만, 원근 카메라만 특이하게 도(degrees)를 인자로 받는다.
 
+<br/>
+
 - aspect
 
 : canvas의 가로 세로 비율이다. 
 
 : 기본 설정으로 canvas의 크기는 300x150이다.
+
+<br/>
 
 - near, far
 
@@ -112,9 +135,11 @@ function main() {
 
 : 이 공간 바깥에 있는 요소는 화면에서 잘려나가며, 렌더링되지 않는다.
 
+<br/>
+
 - 절두체 (camera ,fov, near, far)
 
-: *"절두체"*는 끝부분이 잘려나간 피라미드처럼 생긴 3차원 모양이다.
+: *절두체*는 끝부분이 잘려나간 피라미드처럼 생긴 3차원 모양이다.
 
 : 절두체 안에 있는 요소만 렌더링되며, 바깥에 있는 요소는 렌더링되지 않는다.
 
@@ -125,6 +150,8 @@ const near = 0.1;
 const far = 5;
 const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 ```
+
+<br/>
 
 ### (5) 카메라 각도 조절
 
@@ -137,6 +164,8 @@ const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 camera.position.z = 2;
 ```
 
+<br/>
+
 ### (6)Scene 만들기
 
 - 뭔가를 화면에 렌더링하고 싶다면 먼저 Scene에 추가해야 한다.
@@ -144,6 +173,8 @@ camera.position.z = 2;
 ```jsx
 const scene = new THREE.Scene();
 ```
+
+<br/>
 
 ### (7) 정육면체 객체 생성하기
 
@@ -156,6 +187,8 @@ const boxDepth = 1;
 const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
 ```
 
+<br/>
+
 ### (8) 정육면체 색 지정하기
 
 - Material을 만들고 색을 지정한다.
@@ -165,10 +198,14 @@ const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
 const material = new THREE.MeshBasicMaterial({color: 0x44aa88});
 ```
 
+<br/>
+
 ### (9) Mesh 만들기
 
 - Geometry(물체의 형태) + Material(물체의 색, 밝기, 질감 등)을 이용해 Mesh를 만든다.
 - Mesh는 Geometry, Material 외에도 물체의 위치, 방향, 크기 등을 담은 객체이다.
+
+<br/>
 
 ### (10) Scene에 Mesh 넣기
 
@@ -178,6 +215,8 @@ const material = new THREE.MeshBasicMaterial({color: 0x44aa88});
 scene.add(cube);
 ```
 
+<br/>
+
 ### (11) render에게 scene와 camera 넘겨주기
 
 - renderer의 render 메서드에 Scene과 Camera를 넘겨주면 화면을 렌더링한다.
@@ -186,6 +225,8 @@ scene.add(cube);
 renderer.render(scene, camera);
 ```
 
+<br/>
+
 ### (12) 객체에 애니메이션 주기
 
 - 애니메이션을 구현할 때는 `requestAnimationFrame`를 사용한다.
@@ -193,9 +234,8 @@ renderer.render(scene, camera);
 - 우리가 보는 동영상은 여러 프레임의 모음이다.(종이를 촤르르 넘기면서 움직이는 기법과 유사)
 - 그래서 우리는 `requestAnimationFrame`함수를 재귀적으로 호출하여 프레임을 계속 호출해야 움직임을 볼 수 있다.
 
-아니 재귀적으로 호출하면 제 컴퓨터가 터지잖아요??
-
-아닙니다! three.js는 사용자가 해당 브라우저를 보고 있을 때만 실행된답니다!(와, 효율적이야)
+*아니 재귀적으로 호출하면 제 컴퓨터가 터지잖아요??
+아닙니다! three.js는 사용자가 해당 브라우저를 보고 있을 때만 실행된답니다!(와, 효율적이야)*
 
 ```jsx
 function render(time) {
@@ -208,3 +248,10 @@ function render(time) {
 }
 requestAnimationFrame(render);
 ```
+
+<br/>
+
+### (13) 예제 코드 
+- 실제 코드는 아래에서 확인 가능합니다. 
+
+<a href="https://jsfiddle.net/mkba0ecu/">예제코드보기</a>
